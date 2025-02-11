@@ -1,0 +1,1 @@
+export {DetailedItemPage} from "./ui/DetailedItemPage.tsx";
