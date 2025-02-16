@@ -1,14 +1,61 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {Item, ItemsResponse, NewItem} from "../model/types.ts";
 
+export type ItemsFilter = {
+    type?: string;
+    search?: string;
+
+    // Фильтры для недвижимости
+    propertyType?: string;
+    area?: number;
+    rooms?: number;
+    price?: number;
+    areaFrom?: number;
+    areaTo?: number;
+    priceFrom?: number;
+    priceTo?: number;
+
+    // Фильтры для авто
+    brand?: string;
+    model?: string;
+    year?: number;
+    mileage?: number;
+    yearFrom?: number;
+    yearTo?: number;
+    mileageFrom?: number;
+    mileageTo?: number;
+
+    // Фильтры для услуг
+    serviceType?: string;
+    experience?: number;
+    schedule?: string;
+
+    // Пагинация
+    page?: number;
+    limit?: number;
+};
+
 export const itemsApi = createApi({
     reducerPath: 'itemsApi',
     baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:3000'}),
     tagTypes: ['Items'],
     endpoints: (builder) => ({
-        // Получение списка объявлений с учётом пагинации
-        getItems: builder.query<ItemsResponse, void>({
-            query: () => '/items',
+        // Получение всех объявлений
+        getItems: builder.query<ItemsResponse, ItemsFilter | void>({
+            query: (filters) => {
+                let url = '/items';
+                if (filters) {
+                    const params = new URLSearchParams();
+                    Object.keys(filters).forEach((key) => {
+                        const value = filters[key as keyof ItemsFilter];
+                        if (value !== undefined && value !== null) {
+                            params.append(key, value.toString());
+                        }
+                    });
+                    url += `?${params.toString()}`;
+                }
+                return url;
+            },
             transformResponse: (response: ItemsResponse) => response,
             providesTags: (result) =>
                 result

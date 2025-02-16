@@ -1,34 +1,56 @@
+export enum ItemTypes {
+    REAL_ESTATE = 'Недвижимость',
+    AUTO = 'Авто',
+    SERVICE = 'Услуги'
+}
+
+export enum RealEstatePropertyTypes {
+    APARTMENT = 'Квартира',
+    HOUSE = 'Дом',
+    COTTAGE = 'Коттедж',
+}
+
+export enum AutoBrands {
+    BMW = 'BMW',
+    MERCEDES = 'Mercedes',
+    TOYOTA = 'Toyota',
+    HONDA = 'Honda',
+}
+
+export enum ServiceTypes {
+    REPAIR = 'Ремонт',
+    CLEANING = 'Уборка',
+    DELIVERY = 'Доставка',
+}
+
 export interface BaseItem {
     id: number;
     name: string;
     description: string;
     location: string;
     image: string;
-    type: 'Недвижимость' | 'Авто' | 'Услуги';
+    type: ItemTypes;
 }
 
-// Недвижимость
 export interface RealEstateItem extends BaseItem {
-    type: 'Недвижимость';
-    propertyType: string;
+    type: ItemTypes.REAL_ESTATE;
+    propertyType: RealEstatePropertyTypes;
     area: number;
     rooms: number;
     price: number;
 }
 
-// Авто
 export interface AutoItem extends BaseItem {
-    type: 'Авто';
-    brand: string;
+    type: ItemTypes.AUTO;
+    brand: AutoBrands;
     model: string;
     year: number;
     mileage?: number;
 }
 
-// Услуги
 export interface ServiceItem extends BaseItem {
-    type: 'Услуги';
-    serviceType: string;
+    type: ItemTypes.SERVICE;
+    serviceType: ServiceTypes;
     experience: number;
     price: number;
     schedule?: string;
