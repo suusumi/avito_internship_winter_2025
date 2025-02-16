@@ -30,8 +30,6 @@ export const CategoryFormStep: React.FC<CategoryFormStepProps> = ({type, formDat
     ) => {
         if (!/^\d*$/.test(value)) return;
 
-        if (value.length > 4) return;
-
         onChange(field, value);
 
         const numericValue = Number(value);
@@ -103,7 +101,7 @@ export const CategoryFormStep: React.FC<CategoryFormStepProps> = ({type, formDat
                         error={!!errors.price}
                         helperText={errors.price}
                         value={formData.price || ""}
-                        onChange={(e) => handleNumberChange("price", e.target.value, 10000, 100000000)}
+                        onChange={(e) => handleNumberChange("price", e.target.value, 0, 100000000)}
                     />
                 </>
             )}
@@ -158,7 +156,7 @@ export const CategoryFormStep: React.FC<CategoryFormStepProps> = ({type, formDat
                         error={!!errors.mileage}
                         helperText={errors.mileage}
                         value={formData.mileage || ""}
-                        onChange={(e) => handleNumberChange("mileage", e.target.value, 0, 1000000)}
+                        onChange={(e) => handleNumberChange("mileage", e.target.value, 0, 10000000)}
                     />
                 </>
             )}
@@ -197,7 +195,7 @@ export const CategoryFormStep: React.FC<CategoryFormStepProps> = ({type, formDat
                         error={!!errors.price}
                         helperText={errors.price}
                         value={formData.price || ""}
-                        onChange={(e) => handleNumberChange("price", e.target.value, 100, 10000000)}
+                        onChange={(e) => handleNumberChange("price", e.target.value, 0, 10000000)}
                     />
                     <TextField
                         label="График работы"
