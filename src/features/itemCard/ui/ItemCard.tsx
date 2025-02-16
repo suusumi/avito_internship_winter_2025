@@ -50,6 +50,14 @@ export const ItemCard: React.FC<ItemCardProps> = ({item}) => {
                 <Button size="small" component={RouterLink} to={`/item/${item.id}`}>
                     Открыть
                 </Button>
+                <Button
+                    size="small"
+                    component={RouterLink}
+                    to={`/form/${item.id}`}
+                    color="primary"
+                >
+                    Редактировать
+                </Button>
             </CardActions>
         </Card>
     );
