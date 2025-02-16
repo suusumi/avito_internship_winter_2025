@@ -112,9 +112,9 @@ export const ItemsList: React.FC = () => {
                         color="primary"
                     />
                 )}
-                <FormControl variant="outlined" size="small">
-                    <InputLabel id="limit-label">Записей на странице</InputLabel>
-                    {totalPages > 1 && (
+                {totalCount > 5 && (
+                    <FormControl variant="outlined" size="small">
+                        <InputLabel id="limit-label">Записей на странице</InputLabel>
                         <Select
                             labelId="limit-label"
                             value={itemsPerPage}
@@ -125,8 +125,8 @@ export const ItemsList: React.FC = () => {
                             <MenuItem value={10}>10</MenuItem>
                             <MenuItem value={20}>20</MenuItem>
                         </Select>
-                    )}
-                </FormControl>
+                    </FormControl>
+                )}
             </Box>
         </Box>
     );
