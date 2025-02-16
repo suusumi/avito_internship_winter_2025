@@ -1,13 +1,16 @@
 import React from 'react';
-import {useParams, Link} from 'react-router-dom';
+import {useParams, Link, useLocation} from 'react-router-dom';
 import {useGetItemQuery} from '../../../entities/items/api/itemsApi';
 import {Box, Typography, CircularProgress, Button, Chip, Grid} from '@mui/material';
 import {ItemTypes} from '../../../entities/items/model/types';
 
 export const DetailedItemPage: React.FC = () => {
     const {id} = useParams();
+    const {search} = useLocation();
     const itemId = Number(id);
     const {data: item, error, isLoading} = useGetItemQuery(itemId);
+
+    const searchParams = new URLSearchParams(search);
 
     if (isLoading) {
         return (
@@ -24,12 +27,22 @@ export const DetailedItemPage: React.FC = () => {
             </Typography>
         );
     }
+    console.log("Фильтры при возврате:", searchParams.toString());
+    console.log("Фильтры перед возвратом:", searchParams.toString());
 
     return (
         <Box mt={2}>
-            <Button component={Link} to="/" variant="outlined" sx={{mb: 2}}>
+
+            <Button
+                component={Link}
+                to={`/?${searchParams.toString()}`}
+                variant="outlined"
+                sx={{mb: 2}}
+            >
                 Назад к списку
             </Button>
+
+
             <Box>
                 {item.image ? (
 

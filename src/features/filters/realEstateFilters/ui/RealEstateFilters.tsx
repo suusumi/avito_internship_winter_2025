@@ -11,14 +11,15 @@ import {
 import {FilterProps} from "../../model/types";
 import {RealEstatePropertyTypes} from "../../../../entities/items/model/types.ts";
 import {FilterWrapper} from "../../../../shared/components/FilterWrapper.tsx";
+import {useLocalFilters} from "../../../../shared/lib/useLocalFilters.ts";
 
 export const RealEstateFilters: React.FC<FilterProps> = ({filters, setFilters}) => {
-    const propertyOptions = Object.values(RealEstatePropertyTypes);
+    const {localFilters, handleChange, applyLocalFilters} = useLocalFilters(filters, setFilters);
 
     return (
         <FilterWrapper
-            filters={filters}
-            setFilters={setFilters}
+            filters={localFilters}
+            setFilters={applyLocalFilters}
             resetKeys={[
                 "propertyType",
                 "areaFrom",
@@ -34,43 +35,31 @@ export const RealEstateFilters: React.FC<FilterProps> = ({filters, setFilters}) 
                 <Select
                     labelId="property-type-label"
                     id="property-type"
-                    value={filters.propertyType || ""}
+                    value={localFilters.propertyType || ""}
                     label="Тип недвижимости"
-                    onChange={(e) =>
-                        setFilters({...filters, propertyType: e.target.value})
-                    }
+                    onChange={(e) => handleChange("propertyType", e.target.value)}
                 >
-                    {propertyOptions.map((option) => (
+                    {Object.values(RealEstatePropertyTypes).map((option) => (
                         <MenuItem key={option} value={option}>
                             {option.charAt(0).toUpperCase() + option.slice(1)}
                         </MenuItem>
                     ))}
                 </Select>
             </FormControl>
-            <Box sx={{display: 'flex', gap: 2}}>
+            <Box sx={{display: "flex", gap: 2}}>
                 <TextField
                     label="Площадь от"
                     type="number"
-                    value={filters.areaFrom !== undefined ? filters.areaFrom : ""}
-                    onChange={(e) =>
-                        setFilters({
-                            ...filters,
-                            areaFrom: e.target.value ? parseFloat(e.target.value) : undefined,
-                        })
-                    }
+                    value={localFilters.areaFrom || ""}
+                    onChange={(e) => handleChange("areaFrom", e.target.value ? parseFloat(e.target.value) : undefined)}
                     sx={{flex: 1}}
                     margin="normal"
                 />
                 <TextField
                     label="Площадь до"
                     type="number"
-                    value={filters.areaTo !== undefined ? filters.areaTo : ""}
-                    onChange={(e) =>
-                        setFilters({
-                            ...filters,
-                            areaTo: e.target.value ? parseFloat(e.target.value) : undefined,
-                        })
-                    }
+                    value={localFilters.areaTo || ""}
+                    onChange={(e) => handleChange("areaTo", e.target.value ? parseFloat(e.target.value) : undefined)}
                     sx={{flex: 1}}
                     margin="normal"
                 />
@@ -78,40 +67,25 @@ export const RealEstateFilters: React.FC<FilterProps> = ({filters, setFilters}) 
             <TextField
                 label="Количество комнат"
                 type="number"
-                value={filters.rooms !== undefined ? filters.rooms : ""}
-                onChange={(e) =>
-                    setFilters({
-                        ...filters,
-                        rooms: e.target.value ? parseInt(e.target.value, 10) : undefined,
-                    })
-                }
+                value={localFilters.rooms || ""}
+                onChange={(e) => handleChange("rooms", e.target.value ? parseInt(e.target.value, 10) : undefined)}
                 fullWidth
                 margin="normal"
             />
-            <Box sx={{display: 'flex', gap: 2}}>
+            <Box sx={{display: "flex", gap: 2}}>
                 <TextField
                     label="Цена от"
                     type="number"
-                    value={filters.priceFrom !== undefined ? filters.priceFrom : ""}
-                    onChange={(e) =>
-                        setFilters({
-                            ...filters,
-                            priceFrom: e.target.value ? parseFloat(e.target.value) : undefined,
-                        })
-                    }
+                    value={localFilters.priceFrom || ""}
+                    onChange={(e) => handleChange("priceFrom", e.target.value ? parseFloat(e.target.value) : undefined)}
                     sx={{flex: 1}}
                     margin="normal"
                 />
                 <TextField
                     label="Цена до"
                     type="number"
-                    value={filters.priceTo !== undefined ? filters.priceTo : ""}
-                    onChange={(e) =>
-                        setFilters({
-                            ...filters,
-                            priceTo: e.target.value ? parseFloat(e.target.value) : undefined,
-                        })
-                    }
+                    value={localFilters.priceTo || ""}
+                    onChange={(e) => handleChange("priceTo", e.target.value ? parseFloat(e.target.value) : undefined)}
                     sx={{flex: 1}}
                     margin="normal"
                 />

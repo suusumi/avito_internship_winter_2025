@@ -1,27 +1,34 @@
-import React, {useState} from "react";
-import {
-    Box,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    Typography,
-    SelectChangeEvent
-} from "@mui/material";
 import {useSearchParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 import {ItemsFilter} from "../../../entities/items/api/itemsApi.ts";
-import {AutoFilters} from "../autoFilters";
+import {Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography} from "@mui/material";
 import {RealEstateFilters} from "../realEstateFilters";
+import {AutoFilters} from "../autoFilters";
 import {ServicesFilters} from "../servicesFilters";
 
 export const Filters: React.FC = () => {
-    const [selectedType, setSelectedType] = useState<string>("");
-    const [filters, setFilters] = useState<ItemsFilter>({});
     const [searchParams, setSearchParams] = useSearchParams();
+    const selectedType = searchParams.get("type") || "";
+
+    const getFiltersFromParams = () => {
+        const filters: Record<string, any> = {};
+        searchParams.forEach((value, key) => {
+            if (key !== "type" && key !== "page") {
+                filters[key] = isNaN(Number(value)) ? value : Number(value);
+            }
+        });
+        return filters;
+    };
+
+
+    const [filters, setFilters] = useState<ItemsFilter>(getFiltersFromParams());
+
+    useEffect(() => {
+        setFilters(getFiltersFromParams());
+    }, [searchParams]);
 
     const handleTypeChange = (event: SelectChangeEvent<string>) => {
         const type = event.target.value;
-        setSelectedType(type);
 
         if (type) {
             searchParams.set("type", type);
@@ -52,9 +59,7 @@ export const Filters: React.FC = () => {
             </FormControl>
 
             {selectedType === "" && (
-                <Typography variant="h6" mt={2}>
-                    Фильтры не выбраны
-                </Typography>
+                <Typography variant="h6" mt={2}>Фильтры не выбраны</Typography>
             )}
             {selectedType === "Недвижимость" && (
                 <RealEstateFilters filters={filters} setFilters={setFilters}/>

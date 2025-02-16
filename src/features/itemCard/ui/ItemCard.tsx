@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, CardMedia, CardContent, Typography, CardActions, Button, Box} from '@mui/material';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, useLocation} from 'react-router-dom';
 import {Item} from '../../../entities/items/model/types';
 
 interface ItemCardProps {
@@ -8,6 +8,7 @@ interface ItemCardProps {
 }
 
 export const ItemCard: React.FC<ItemCardProps> = ({item}) => {
+    const {search} = useLocation();
     return (
         <Card>
             {item.image ? (
@@ -47,13 +48,13 @@ export const ItemCard: React.FC<ItemCardProps> = ({item}) => {
                 )}
             </CardContent>
             <CardActions>
-                <Button size="small" component={RouterLink} to={`/item/${item.id}`}>
+                <Button size="small" component={RouterLink} to={`/item/${item.id}${search}`}>
                     Открыть
                 </Button>
                 <Button
                     size="small"
                     component={RouterLink}
-                    to={`/form/${item.id}`}
+                    to={`/form/${item.id}${search}`}
                     color="primary"
                 >
                     Редактировать
