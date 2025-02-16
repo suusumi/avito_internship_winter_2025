@@ -37,7 +37,7 @@ export type ItemsFilter = {
 
 export const itemsApi = createApi({
     reducerPath: 'itemsApi',
-    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:3000'}),
+    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:3001'}),
     tagTypes: ['Items'],
     endpoints: (builder) => ({
         // Получение всех объявлений
@@ -81,12 +81,12 @@ export const itemsApi = createApi({
         }),
         // Обновление существующего объявления
         updateItem: builder.mutation<Item, UpdateItemPayload>({
-            query: ({ id, ...update }) => ({
+            query: ({id, ...update}) => ({
                 url: `/items/${id}`,
                 method: 'PUT',
                 body: update,
             }),
-            invalidatesTags: (_result, _error, { id }) => [{ type: 'Items', id }],
+            invalidatesTags: (_result, _error, {id}) => [{type: 'Items', id}],
         }),
         // Удаление объявления по id
         deleteItem: builder.mutation<void, number>({
