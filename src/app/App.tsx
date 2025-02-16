@@ -17,6 +17,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<AllItemsPage/>}/>
                         <Route path="/item/:id" element={<DetailedItemPage/>}/>
+                        <Route path="/form/:id" element={<FormPage/>}/>
                         <Route path="/form" element={<FormPage/>}/>
                     </Routes>
                 </Container>
