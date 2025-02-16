@@ -2,7 +2,7 @@ FROM node:20
 
 WORKDIR /app
 
-COPY backend/package.json backend/package-lock.json ./
+COPY backend/package.json ./
 
 RUN npm install
 
