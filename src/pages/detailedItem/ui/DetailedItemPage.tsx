@@ -36,7 +36,7 @@ export const DetailedItemPage: React.FC = () => {
                     <Box
                         sx={{
                             height: {xs: "45vw", md: "30vw"},
-                            backgroundColor: 'grey',
+                            backgroundColor: 'grey.200',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -61,7 +61,7 @@ export const DetailedItemPage: React.FC = () => {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            backgroundColor: 'grey',
+                            backgroundColor: 'grey.200',
                             borderRadius: 1,
                             mb: 2,
                         }}
