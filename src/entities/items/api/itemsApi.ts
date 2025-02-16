@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {Item, ItemsResponse, NewItem} from "../model/types.ts";
+import {Item, ItemsResponse, NewItem, UpdateItemPayload} from "../model/types.ts";
 
 export type ItemsFilter = {
     type?: string;
@@ -80,13 +80,13 @@ export const itemsApi = createApi({
             invalidatesTags: [{type: 'Items', id: 'LIST'}],
         }),
         // Обновление существующего объявления
-        updateItem: builder.mutation<Item, Partial<Item> & Pick<Item, 'id'>>({
-            query: ({id, ...update}) => ({
+        updateItem: builder.mutation<Item, UpdateItemPayload>({
+            query: ({ id, ...update }) => ({
                 url: `/items/${id}`,
                 method: 'PUT',
                 body: update,
             }),
-            invalidatesTags: (_result, _error, {id}) => [{type: 'Items', id}],
+            invalidatesTags: (_result, _error, { id }) => [{ type: 'Items', id }],
         }),
         // Удаление объявления по id
         deleteItem: builder.mutation<void, number>({

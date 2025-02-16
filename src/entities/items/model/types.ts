@@ -66,3 +66,8 @@ export interface ItemsResponse {
     limit: number;
     totalCount: number;
 }
+
+export type UpdateItemPayload =
+    | ({ id: number } & Partial<RealEstateItem> & { type: ItemTypes.REAL_ESTATE })
+    | ({ id: number } & Partial<AutoItem> & { type: ItemTypes.AUTO })
+    | ({ id: number } & Partial<ServiceItem> & { type: ItemTypes.SERVICE });
