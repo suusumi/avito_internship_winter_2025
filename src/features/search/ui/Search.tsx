@@ -1,10 +1,22 @@
-import React from "react";
+import React, {useState} from "react";
 import {InputBase, Paper, Button} from "@mui/material";
+import {useSearchParams} from "react-router-dom";
 
 export const Search: React.FC = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        searchParams.set("search", searchTerm);
+        searchParams.set("page", "1");
+        setSearchParams(searchParams);
+    };
+
     return (
         <Paper
             component="form"
+            onSubmit={handleSubmit}
             sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -13,7 +25,6 @@ export const Search: React.FC = () => {
                 width: '100%',
                 maxWidth: 600,
                 boxShadow: 'none',
-
             }}
         >
             <InputBase
@@ -26,6 +37,8 @@ export const Search: React.FC = () => {
                 }}
                 placeholder="Поиск по объявлениям"
                 inputProps={{'aria-label': 'Поиск по объявлениям'}}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
             />
             <Button
                 type="submit"
