@@ -86,8 +86,9 @@ export const DetailedItemPage: React.FC = () => {
                         <Chip label={item.type} variant="outlined" color="primary"/>
                         <Chip label={item.location} variant="outlined" color="secondary"/>
                     </Box>
-                    {item.type === ItemTypes.REAL_ESTATE || item.type === ItemTypes.SERVICE && (
-                        <Typography variant="h5">{item.price} руб.</Typography>)}
+                    {(item.type === ItemTypes.REAL_ESTATE || item.type === ItemTypes.SERVICE) && (
+                        <Typography variant="h5">{item.price} руб.</Typography>
+                    )}
                 </Box>
 
                 <Box mb={3}>
